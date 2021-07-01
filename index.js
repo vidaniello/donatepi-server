@@ -10,8 +10,7 @@ app.use(bodyParser.json());
 const piHostname = "api.minepi.com";
 const piBasePath = "/v2";
 
-const somevar = process.env.SOMEVAR;
-
+/*
 app.get('/', (req, res) => {
   res.send('nothing to do here!');
 });
@@ -29,6 +28,15 @@ app.post('/printmyname', (req, res) => {
   
   res.send(resp);
 });
+*/
+
+//Call by json operation
+app.post('/v1', (req, res) => {
+  let operation = req.body.operation;
+  if(operation=="")
+  getPayments(res, req.body.payment_id);
+});
+
 
 
 
@@ -53,14 +61,19 @@ function getMe(resp, user_access_token){
     console.log("statusCode: "+res.statusCode);
     res.setEncoding('utf8');
     
+    let retData;
+    
     res.on('data', d => {
+      retData += d;
+    });
+    
+    res.on('end', () => {
       resp.status(res.statusCode)
-          .send(d);
+          .send(retData);
     });
     
     res.on('error', error => {
-      console.error(error);
-      resp.status(500).send(error);
+      onError(resp, res.statusCode, error);
     })
     
   });
@@ -91,18 +104,24 @@ function getPayments(resp, payment_id){
   
   let req = https.request(options, res => {
     console.log("statusCode: "+res.statusCode);
-
+    res.setEncoding('utf8');
+    
+    let retData;
+    
     res.on('data', d => {
-      resp.status(res.statusCode)
-          .send(d);
+      retData += d;
     });
     
-  });
+    res.on('end', () => {
+      resp.status(res.statusCode)
+          .send(retData);
+    });
+    
+    res.on('error', error => {
+      onError(resp, res.statusCode, error);
+    })
   
-  req.on('error', error => {
-    console.error(error);
-    resp.status(500).send(error);
-  })
+  });
   
   req.end();
 }
@@ -115,7 +134,10 @@ function getPayments(resp, payment_id){
 
 
 
-
+function onError(resp, status, error){
+  console.error(error);
+  resp.status(status).send(error);
+}
 
 
 
