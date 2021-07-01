@@ -30,7 +30,9 @@ app.post('/printmyname', (req, res) => {
   res.send(resp);
 });
 
-app.post('/payments', (req, res) => {
+
+//paymentInfo
+app.post('/paymentInfo', (req, res) => {
   getPayments(res, req.body.payment_id);
 });
 
@@ -47,18 +49,21 @@ function getPayments(resp, payment_id){
   }
   
   let req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`)
+    console.log("statusCode: "+res.statusCode);
 
     res.on('data', d => {
-      resp.send(d);
-    })
+      resp.status(res.statusCode)
+          .send(d);
+    });
+    
   });
   
   req.on('error', error => {
-    console.error(error)
-    
+    console.error(error);
+    resp.status(500).send(error);
   })
   
+  req.end();
 }
 
 
