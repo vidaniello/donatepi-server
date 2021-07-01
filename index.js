@@ -1,3 +1,4 @@
+const https = require('https');
 const express = require('express');
 var bodyParser = require('body-parser');
 
@@ -23,7 +24,7 @@ app.post('/printmyname', (req, res) => {
   let resp = "your name from ?params: "+req.query.name+"<br/>";
   resp += "json name: "+req.body.name+"<br/>";
   resp += "json surname: "+req.body.surname+"<br/>";
-  resp += "stringfy: "+JSON.stringify(req.body.surname;
+  resp += "stringfy: "+JSON.stringify(req.body);
   
   res.send(resp);
 });
