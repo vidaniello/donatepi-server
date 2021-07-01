@@ -31,16 +31,29 @@ app.post('/printmyname', (req, res) => {
 });
 
 app.post('/payments', (req, res) => {
-  res.send('nothing to do here!');
+  getPayments(req.body.payment_id);
 });
 
 function getPayments(payment_id){
+  
   let options = {
     hostname: piHostname,
     port: 443,
     path: piBasePath+"/payments/"+payment_id,
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': "Key "+process.env.APPKEY,
+    }
   }
+  
+  let req = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`)
+
+    res.on('data', d => {
+      process.stdout.write(d)
+    })
+  });
+  
 }
 
 
