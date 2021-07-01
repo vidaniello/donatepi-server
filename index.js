@@ -80,7 +80,7 @@ function getMe(resp, user_access_token){
     res.on('end', () => {
       resp.status(res.statusCode)
           //.set(res.headers)
-          .set()
+          .set("Access-Control-Allow-Origin","*")
           .send(retData);
     });
     
