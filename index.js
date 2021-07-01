@@ -79,7 +79,8 @@ function getMe(resp, user_access_token){
     
     res.on('end', () => {
       resp.status(res.statusCode)
-          .set(res.headers)
+          //.set(res.headers)
+          .set()
           .send(retData);
     });
     
@@ -127,7 +128,7 @@ function getPaymentInfo(resp, payment_id){
     
     res.on('end', () => {
       resp.status(res.statusCode)
-          .set(res.headers)
+          //.set(res.headers)
           .send(retData);
     });
     
@@ -150,7 +151,9 @@ function getPaymentInfo(resp, payment_id){
 
 function onError(resp, res, error){
   console.error(error);
-  resp.status(res.statusCode).set(res.headers).send(error);
+  resp.status(res.statusCode)
+    //.set(res.headers)
+    .send(error);
 }
 
 
