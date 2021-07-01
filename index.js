@@ -32,18 +32,28 @@ app.post('/printmyname', (req, res) => {
 
 //Call by json operation
 app.post('/v1', (req, res) => {
+  
   let operation = req.body.operation;
-  if(operation=="")
-  getPayments(res, req.body.payment_id);
+  
+  if(operation=="infoByUserAccessToken")
+    getMe(res, req.body.user_access_token);
+  else if(operation=="paymentInfo")
+    getPaymentInfo(res, req.body.payment_id);
+  else{
+    res.status(404).end("command '"+operation+"'' not found");
+  }
+  
 });
 
 
 
 
 //Info user by access token
+/*
 app.post('/me', (req, res) => {
   getMe(res, req.body.user_access_token);
 });
+*/
 
 function getMe(resp, user_access_token){
   
@@ -86,11 +96,13 @@ function getMe(resp, user_access_token){
 
 
 //paymentInfo
+/*
 app.post('/paymentInfo', (req, res) => {
-  getPayments(res, req.body.payment_id);
+  getPaymentInfo(res, req.body.payment_id);
 });
+*/
 
-function getPayments(resp, payment_id){
+function getPaymentInfo(resp, payment_id){
   
   let options = {
     hostname: piHostname,
