@@ -31,10 +31,10 @@ app.post('/printmyname', (req, res) => {
 });
 
 app.post('/payments', (req, res) => {
-  getPayments(req.body.payment_id);
+  getPayments(res, req.body.payment_id);
 });
 
-function getPayments(payment_id){
+function getPayments(resp, payment_id){
   
   let options = {
     hostname: piHostname,
@@ -50,9 +50,14 @@ function getPayments(payment_id){
     console.log(`statusCode: ${res.statusCode}`)
 
     res.on('data', d => {
-      process.stdout.write(d)
+      resp.send(d);
     })
   });
+  
+  req.on('error', error => {
+    console.error(error)
+    
+  })
   
 }
 
