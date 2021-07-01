@@ -7,7 +7,8 @@ app.use(bodyParser.json());
 
 //var jsonParser = bodyParser.json();
 
-const piEndpoint = "https://api.minepi.com/v2";
+const piHostname = "api.minepi.com";
+const piBasePath = "/v2";
 
 const somevar = process.env.SOMEVAR;
 
@@ -29,9 +30,17 @@ app.post('/printmyname', (req, res) => {
   res.send(resp);
 });
 
+app.post('/payments', (req, res) => {
+  res.send('nothing to do here!');
+});
 
-function getPayments(){
-  
+function getPayments(payment_id){
+  let options = {
+    hostname: piHostname,
+    port: 443,
+    path: piBasePath+"/payments/"+payment_id,
+    method: 'GET'
+  }
 }
 
 
