@@ -51,19 +51,20 @@ function getMe(resp, user_access_token){
   
   let req = https.request(options, res => {
     console.log("statusCode: "+res.statusCode);
-
+    res.setEncoding('utf8');
+    
     res.on('data', d => {
       resp.status(res.statusCode)
           .send(d);
     });
     
+    res.on('error', error => {
+      console.error(error);
+      resp.status(500).send(error);
+    })
+    
   });
-  
-  req.on('error', error => {
-    console.error(error);
-    resp.status(500).send(error);
-  })
-  
+    
   req.end();
 }
 
