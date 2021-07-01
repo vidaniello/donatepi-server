@@ -66,7 +66,7 @@ function getMe(resp, user_access_token){
       'Authorization': "Bearer "+user_access_token,
     }
   }
-  
+  console.log("user_access_token: "+user_access_token);
   let req = https.request(options, res => {
     console.log("statusCode: "+res.statusCode);
     res.setEncoding('utf8');
