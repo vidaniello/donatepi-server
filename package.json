@@ -1,7 +1,10 @@
 {
   "name": "donatepi-server",
+  "description": "A simple donate app based on PI blockchain, server side",
   "version": "1.0.0",
+  "author": "vidaniello@gmail.com",
   "main": "index.js",
+  "license": "ISC",
   "scripts": {
     "start": "node index.js"
   },
