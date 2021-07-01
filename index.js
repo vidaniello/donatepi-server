@@ -2,8 +2,9 @@ const express = require('express');
 var bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json());
 
-var jsonParser = bodyParser.json();
+//var jsonParser = bodyParser.json();
 
 const piEndpoint = "https://api.minepi.com/v2";
 
@@ -17,10 +18,12 @@ app.post('/', (req, res) => {
   res.send('nothing to do here!');
 });
 
-app.post('/printmyname', jsonParser, (req, res) => {
+app.post('/printmyname', (req, res) => {
   
-  let resp = 'your name: '+req.query.name;
-  resp += req.body;
+  let resp = "your name from ?params: "+req.query.name+"<br/>";
+  resp += "json name: "+req.body.name+"<br/>";
+  resp += "json surname: "+req.body.surname+"<br/>";
+  resp += "stringfy: "+JSON.stringify(req.body.surname;
   
   res.send(resp);
 });
