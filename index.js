@@ -30,6 +30,9 @@ app.post('/printmyname', (req, res) => {
 });
 
 
+function getPayments(){
+  
+}
 
 
 
