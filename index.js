@@ -49,7 +49,9 @@ app.post('/v1', (req, res) => {
 
 app.get('/v1', (req, res) => {
   
-  res.send("CIAO");
+  res
+    .set("Access-Control-Allow-Origin","www.w3schools.com")
+    .send("CIAO");
 });
 
 
