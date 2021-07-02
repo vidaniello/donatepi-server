@@ -68,8 +68,8 @@ app.post('/v1', (req, res) => {
 
 
 
-app.get('/v1', (req, res) => {
-  res.send("CIAO........");
+app.get('/serverStatus', (req, res) => {
+  res.send("ok!");
 });
 
 
