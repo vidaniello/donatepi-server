@@ -2,24 +2,25 @@ const https = require('https');
 const express = require('express');
 var bodyParser = require('body-parser');
 
+const piHostname = "api.minepi.com";
+const piBasePath = "/v2";
+
 const app = express();
 app.use(bodyParser.json());
 
 // https://enable-cors.org/server_expressjs.html
 app.use(function(req, res, next) {
-  console.log(req.method+" request from: "+req.headers.origin);
+  
   //Preflight
-  if(req.method=="OPTIONS"){
-     console.log("Preflight request from: "+req.headers.origin);
-    if(req.headers.origin=="https://donatepi.glitch.me"){
-      console.log("Access control allowed for: "+req.headers.origin);
+  console.log("Preflight request from: "+req.headers.origin);
+  if(req.headers.origin=="https://donatepi.glitch.me" || req.headers.origin=="https://www.w3schools.com" ){
+    console.log("Access control allowed for: "+req.headers.origin);
       
-      res.header("Access-Control-Allow-Origin", req.headers.origin);
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       
-    }else{
-      console.log("Access control default for: "+req.headers.origin);
-    }
+  }else{
+    console.log("Access control default for: "+req.headers.origin);
   }
   
   next();
@@ -28,8 +29,7 @@ app.use(function(req, res, next) {
 
 //var jsonParser = bodyParser.json();
 
-const piHostname = "api.minepi.com";
-const piBasePath = "/v2";
+
 
 /*
 app.get('/', (req, res) => {
@@ -51,7 +51,7 @@ app.post('/printmyname', (req, res) => {
 });
 */
 
-app.post('/serverStatus', (req, res) => {
+app.get('/serverStatus', (req, res) => {
   res.send("Donatepi-server status ok!");
 });
 
