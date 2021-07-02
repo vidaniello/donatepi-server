@@ -67,6 +67,8 @@ app.get('/serverStatus', (req, res) => {
 //Call by json operation
 app.post('/v1', (req, res) => {
   
+  console.log("contLengh: "+req.get("Content-Length"));
+  
   let operation = req.body.operation;
   
   if(operation=="infoByUserAccessToken")
@@ -103,9 +105,7 @@ function getMe(resp, user_access_token){
       'Authorization': "Bearer "+user_access_token,
     }
   }
-  
-  console.log("user_access_token: "+user_access_token);
-  
+    
   let req = https.request(options, res => {
     
     res.setEncoding('utf8');
