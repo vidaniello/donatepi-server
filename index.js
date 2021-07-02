@@ -11,7 +11,7 @@ app.use(function(req, res, next) {
   //Preflight
   if(req.method=="OPTIONS"){
      console.log("Preflight request from: "+req.headers.origin);
-    if(req.headers.origin=="https://www.w3schools.com"){
+    if(req.headers.origin=="https://donatepi.glitch.me"){
       console.log("Access control allowed for: "+req.headers.origin);
       
       res.header("Access-Control-Allow-Origin", req.headers.origin);
@@ -51,6 +51,10 @@ app.post('/printmyname', (req, res) => {
 });
 */
 
+app.post('/serverStatus', (req, res) => {
+  res.send("Donatepi-server status ok!");
+});
+
 //Call by json operation
 app.post('/v1', (req, res) => {
   
@@ -68,9 +72,7 @@ app.post('/v1', (req, res) => {
 
 
 
-app.get('/serverStatus', (req, res) => {
-  res.send("Donatepi-server status ok!");
-});
+
 
 
 
