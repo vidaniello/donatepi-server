@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 
 // https://enable-cors.org/server_expressjs.html
 app.use(function(req, res, next) {
-  
+  console.log(req.method+" request from: "+req.headers.origin);
   //Preflight
   if(req.method=="OPTIONS"){
      console.log("Preflight request from: "+req.headers.origin);
