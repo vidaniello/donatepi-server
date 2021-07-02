@@ -2,6 +2,9 @@ const https = require('https');
 const express = require('express');
 var bodyParser = require('body-parser');
 
+const serverEnabled = true;
+const messageWhenServerDisabled = "Server donatepi is in manteinance!";
+
 const piHostname = "api.minepi.com";
 const piBasePath = "/v2";
 
@@ -54,7 +57,11 @@ app.post('/printmyname', (req, res) => {
 */
 
 app.get('/serverStatus', (req, res) => {
-  res.send("Donatepi-server status ok!");
+  if(serverEnabled)
+    res.send("Donatepi-server status ok!");
+  else
+    res.status(500)  
+      .send(messageWhenServerDisabled);
 });
 
 //Call by json operation
