@@ -7,15 +7,21 @@ app.use(bodyParser.json());
 
 
 app.use(function(req, res, next) {
-  console.log(req.);
-  if(req.headers.origin=="https://www.w3schools.com"){
-    console.log("Access control allowed for: "+req.headers.origin);
-    res.header("Access-Control-Allow-Origin", req.headers.origin);
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  }else{
-    console.log("Access control default for: "+req.headers.origin);
+  
+  //Preflight
+  if(req.method=="OPTIONS"){
+     console.log("Preflight request from: "+req.headers.origin);
+    if(req.headers.origin=="https://www.w3schools.com"){
+      console.log("Access control allowed for: "+req.headers.origin);
+      res.header("Access-Control-Allow-Origin", req.headers.origin);
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    }else{
+      console.log("Access control default for: "+req.headers.origin);
+    }
   }
+  
   next();
+  
 });
 
 //var jsonParser = bodyParser.json();
@@ -61,7 +67,7 @@ app.post('/v1', (req, res) => {
 
 
 app.get('/v1', (req, res) => {
-  res.send("CIAO");
+  res.send("CIAO........");
 });
 
 
@@ -88,7 +94,7 @@ function getMe(resp, user_access_token){
   console.log("user_access_token: "+user_access_token);
   
   let req = https.request(options, res => {
-    console.log("statusCode: "+res.statusCode);
+    
     res.setEncoding('utf8');
     
     let retData;
@@ -98,9 +104,7 @@ function getMe(resp, user_access_token){
     });
     
     res.on('end', () => {
-      resp.status(res.statusCode)
-          .set(res.headers)
-          .set("Access-Control-Allow-Origin","https://www.w3schools.com")
+      resp.status(res.statusCode)  
           .send(retData);
     });
     
@@ -148,7 +152,6 @@ function getPaymentInfo(resp, payment_id){
     
     res.on('end', () => {
       resp.status(res.statusCode)
-          //.set(res.headers)
           .send(retData);
     });
     
@@ -172,8 +175,7 @@ function getPaymentInfo(resp, payment_id){
 function onError(resp, res, error){
   console.error(error);
   resp.status(res.statusCode)
-    //.set(res.headers)
-    .send(error);
+      .send(error);
 }
 
 
