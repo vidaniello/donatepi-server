@@ -5,12 +5,13 @@ var bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
+/*
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Origin", "https://www.w3schools.com");
+ // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
+*/
 //var jsonParser = bodyParser.json();
 
 const piHostname = "api.minepi.com";
@@ -54,8 +55,9 @@ app.post('/v1', (req, res) => {
 
 
 app.get('/v1', (req, res) => {
-  
-  res.send("CIAO");
+  res
+    .setHeader("Access-Control-Allow-Origin","https://www.w3schools.com")
+    .send("CIAO");
 });
 
 
