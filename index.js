@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-
+// https://enable-cors.org/server_expressjs.html
 app.use(function(req, res, next) {
   
   //Preflight
@@ -13,8 +13,10 @@ app.use(function(req, res, next) {
      console.log("Preflight request from: "+req.headers.origin);
     if(req.headers.origin=="https://www.w3schools.com"){
       console.log("Access control allowed for: "+req.headers.origin);
+      
       res.header("Access-Control-Allow-Origin", req.headers.origin);
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      
     }else{
       console.log("Access control default for: "+req.headers.origin);
     }
@@ -182,5 +184,5 @@ function onError(resp, res, error){
 
 app.listen(process.env.PORT, () => {
   //console.log("Example app listening at http://localhost:"+process.env.PORT);
-  console.log("done");
+  //console.log("done");
 });
