@@ -47,6 +47,12 @@ app.post('/v1', (req, res) => {
 
 
 
+app.get('/v1', (req, res) => {
+  
+  res.send("CIAO");
+});
+
+
 
 //Info user by access token
 /*
@@ -66,7 +72,9 @@ function getMe(resp, user_access_token){
       'Authorization': "Bearer "+user_access_token,
     }
   }
+  
   console.log("user_access_token: "+user_access_token);
+  
   let req = https.request(options, res => {
     console.log("statusCode: "+res.statusCode);
     res.setEncoding('utf8');
@@ -79,8 +87,8 @@ function getMe(resp, user_access_token){
     
     res.on('end', () => {
       resp.status(res.statusCode)
-          //.set(res.headers)
-          .set("Access-Control-Allow-Origin","*")
+          .set(res.headers)
+          .set("Access-Control-Allow-Origin","https://www.w3schools.com")
           .send(retData);
     });
     
