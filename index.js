@@ -69,7 +69,7 @@ app.post('/v1', (req, res) => {
 
 
 app.get('/serverStatus', (req, res) => {
-  res.send("ok!");
+  res.send("Donatepi-server status ok!");
 });
 
 
