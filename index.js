@@ -67,7 +67,7 @@ app.get('/serverStatus', (req, res) => {
 //Call by json operation
 app.post('/v1', (req, res) => {
   
-  console.log("contLengh: "+req.get("Content-Length"));
+  //console.log("contLengh: "+req.get("Content-Length"));
   
   let operation = req.body.operation;
   
