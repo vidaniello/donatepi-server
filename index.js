@@ -231,15 +231,21 @@ function approvePayment(resp, payment_id){
 *   "txid": "7a7ed20d3d72c365b9019baf8dc4c4e3cce4c08114d866e47ae157e3a796e9e7"
 * }
 */
-function completePayment(resp, payment_id, ){
+function completePayment(resp, payment_id, txid){
+  
+  let data = new Object();
+  data.txid = txid;
+  let dataJson = new TextEncoder().encode(JSON.stringify(data));
   
   let options = {
     hostname: piHostname,
     port: 443,
-    path: piBasePath+"/payments/"+payment_id+"/approve",
+    path: piBasePath+"/payments/"+payment_id+"/complete",
     method: 'POST',
     headers: {
       'Authorization': "Key "+process.env.APPKEY,
+      'Content-Type': "application/json",
+      'Content-Length': dataJson.length
     }
   }
     
@@ -264,6 +270,7 @@ function completePayment(resp, payment_id, ){
     
   });
     
+  req.write(data)
   req.end();
 }
 
