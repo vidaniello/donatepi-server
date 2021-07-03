@@ -75,7 +75,7 @@ app.post('/v1', (req, res) => {
     getMe(res, req.body.user_access_token);
   else if(operation=="paymentInfo")
     getPaymentInfo(res, req.body.payment_id);
-  else if(operation=="paymentInfo")
+  else if(operation=="approvePayment")
     getPaymentInfo(res, req.body.payment_id);
   else{
     res.status(404).end("command '"+operation+"'' not found");
@@ -156,7 +156,7 @@ function getPaymentInfo(resp, payment_id){
   }
   
   let req = https.request(options, res => {
-    console.log("statusCode: "+res.statusCode);
+    
     res.setEncoding('utf8');
     
     let retData;
@@ -180,6 +180,46 @@ function getPaymentInfo(resp, payment_id){
 }
 
 
+
+
+
+//approvePayment
+// /payments/{payment_id}/approve
+function approvePayment(resp, payment_id){
+  
+  let options = {
+    hostname: piHostname,
+    port: 443,
+    path: piBasePath+"/payments/"+payment_id+"/approve",
+    method: 'POST',
+    headers: {
+      'Authorization': "Key "+process.env.APPKEY,
+    }
+  }
+    
+  let req = https.request(options, res => {
+    
+    res.setEncoding('utf8');
+    
+    let retData;
+    
+    res.on('data', d => {
+      retData += d;
+    });
+    
+    res.on('end', () => {
+      resp.status(res.statusCode)  
+          .send(retData);
+    });
+    
+    res.on('error', error => {
+      onError(resp, res, error);
+    })
+    
+  });
+    
+  req.end();
+}
 
 
 
