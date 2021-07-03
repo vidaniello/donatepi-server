@@ -75,6 +75,8 @@ app.post('/v1', (req, res) => {
     getMe(res, req.body.user_access_token);
   else if(operation=="paymentInfo")
     getPaymentInfo(res, req.body.payment_id);
+  else if(operation=="paymentInfo")
+    getPaymentInfo(res, req.body.payment_id);
   else{
     res.status(404).end("command '"+operation+"'' not found");
   }
