@@ -64,24 +64,37 @@ app.get('/serverStatus', (req, res) => {
       .send(messageWhenServerDisabled);
 });
 
+app.get('/donatepiBalance', (req, res) => {
+  if(serverEnabled){
+    res.send("Donatepi-server status ok!");
+  }else
+    res.status(500)  
+      .send(messageWhenServerDisabled);
+});
+
 //Call by json operation
 app.post('/v1', (req, res) => {
   
   //console.log("contLengh: "+req.get("Content-Length"));
   
-  let operation = req.body.operation;
+  if(serverEnabled){
   
-  if(operation=="infoByUserAccessToken")
-    getMe(res, req.body.user_access_token);
-  else if(operation=="paymentInfo")
-    getPaymentInfo(res, req.body.payment_id);
-  else if(operation=="approvePayment")
-    approvePayment(res, req.body.payment_id);
-  else if(operation=="completePayment")
-    completePayment(res, req.body.payment_id, req.body.txid);
-  else{
-    res.status(404).end("command '"+operation+"'' not found");
-  }
+    let operation = req.body.operation;
+
+    if(operation=="infoByUserAccessToken")
+      getMe(res, req.body.user_access_token);
+    else if(operation=="paymentInfo")
+      getPaymentInfo(res, req.body.payment_id);
+    else if(operation=="approvePayment")
+      approvePayment(res, req.body.payment_id);
+    else if(operation=="completePayment")
+      completePayment(res, req.body.payment_id, req.body.txid);
+    else{
+      res.status(404).end("command '"+operation+"'' not found");
+    }
+  }else
+    res.status(500)  
+      .send(messageWhenServerDisabled);
   
 });
 
@@ -235,7 +248,8 @@ function completePayment(resp, payment_id, txid){
   
   let data = new Object();
   data.txid = txid;
-  let dataJson = new TextEncoder().encode(JSON.stringify(data));
+  let dataJson = JSON.stringify(data);
+  let dataByteArray = new TextEncoder().encode(dataByteArray);
   
   let options = {
     hostname: piHostname,
@@ -270,7 +284,7 @@ function completePayment(resp, payment_id, txid){
     
   });
     
-  req.write(data)
+  req.write(dataByteArray);
   req.end();
 }
 
