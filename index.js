@@ -1,3 +1,8 @@
+// https://github.com/pi-apps/pi-platform-docs
+// https://api.testnet.minepi.com
+// https://pi-blockchain.net/
+// https://dashboard.pi-blockchain.net/
+
 const https = require('https');
 const express = require('express');
 var bodyParser = require('body-parser');
