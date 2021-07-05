@@ -289,15 +289,15 @@ function completePayment(resp, payment_id, txid){
       
       let retDataParsed = JSON.parse(retData);
       
-      console.log("Request complete payment");
+      //console.log("Request complete payment");
       /*
       console.log("user_id: "+retDataParsed.user_uid);
       console.log("to_address: "+retDataParsed.to_address);
       console.log("memo: "+retDataParsed.memo);
       console.log("metadata: "+JSON.stringify(retDataParsed.metadata));
       */
-      console.log(retData);
-      console.log("statuscode: "+res.statusCode);
+      //console.log(retData);
+      //console.log("statuscode: "+res.statusCode);
             
       resp.status(res.statusCode)  
           .send(retData);
