@@ -127,7 +127,7 @@ function getMe(resp, user_access_token){
     
     res.setEncoding('utf8');
     
-    let retData;
+    let retData = "";
     
     res.on('data', d => {
       retData += d;
@@ -174,7 +174,7 @@ function getPaymentInfo(resp, payment_id){
     
     res.setEncoding('utf8');
     
-    let retData;
+    let retData = "";
     
     res.on('data', d => {
       retData += d;
@@ -221,7 +221,7 @@ function approvePayment(resp, payment_id){
     
     res.setEncoding('utf8');
     
-    let retData;
+    let retData = "";
     
     res.on('data', d => {
       retData += d;
@@ -277,7 +277,7 @@ function completePayment(resp, payment_id, txid){
     
     res.setEncoding('utf8');
     
-    let retData;
+    let retData = "";
     
     res.on('data', d => {
       retData += d;
@@ -285,10 +285,19 @@ function completePayment(resp, payment_id, txid){
     
     res.on('end', () => {
       
-      //retData is PaymentDTO object
+      //retData is PaymentDTO object   
       
-      console.log("user_id: "+retData.user_uid);
+      let retDataParsed = JSON.parse(retData);
       
+      console.log("Request complete payment");
+      /*
+      console.log("user_id: "+retDataParsed.user_uid);
+      console.log("to_address: "+retDataParsed.to_address);
+      console.log("memo: "+retDataParsed.memo);
+      console.log("metadata: "+JSON.stringify(retDataParsed.metadata));
+      */
+      console.log(retData);
+            
       resp.status(res.statusCode)  
           .send(retData);
     });
