@@ -297,6 +297,7 @@ function completePayment(resp, payment_id, txid){
       console.log("metadata: "+JSON.stringify(retDataParsed.metadata));
       */
       console.log(retData);
+      console.log("statuscode: "+res.statusCode);
             
       resp.status(res.statusCode)  
           .send(retData);
