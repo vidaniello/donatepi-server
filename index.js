@@ -257,7 +257,7 @@ function completePayment(resp, payment_id, txid){
   let data = new Object();
   data.txid = txid;
   let dataJson = JSON.stringify(data);
-  let dataByteArray = new TextEncoder().encode(dataByteArray);
+  //let dataByteArray = new TextEncoder().encode(dataJson);
   
   let options = {
     hostname: piHostname,
@@ -287,6 +287,8 @@ function completePayment(resp, payment_id, txid){
       
       //retData is PaymentDTO object
       
+      console.log("user_id: "+retData.user_uid);
+      
       resp.status(res.statusCode)  
           .send(retData);
     });
@@ -297,7 +299,7 @@ function completePayment(resp, payment_id, txid){
     
   });
     
-  req.write(dataByteArray);
+  req.write(dataJson);
   req.end();
 }
 
