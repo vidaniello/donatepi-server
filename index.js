@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
   if(req.method=="OPTIONS")
     console.log("Preflight request from: "+req.headers.origin);
   
-  if(req.headers.origin=="https://donatepi.glitch.me" || req.headers.origin=="https://www.w3schools.com" ){
+  if(req.headers.origin=="https://donatepi.glitch.me" /*|| req.headers.origin=="https://www.w3schools.com" */){
     console.log("Access control allowed for: "+req.headers.origin);
       
     res.header("Access-Control-Allow-Origin", req.headers.origin);
@@ -181,6 +181,9 @@ function getPaymentInfo(resp, payment_id){
     });
     
     res.on('end', () => {
+      
+      //retData is PaymentDTO object
+      
       resp.status(res.statusCode)
           .send(retData);
     });
@@ -211,7 +214,9 @@ function approvePayment(resp, payment_id){
       'Authorization': "Key "+process.env.APPKEY,
     }
   }
-    
+  
+  console.log("request approve payment id: "+payment_id);
+  
   let req = https.request(options, res => {
     
     res.setEncoding('utf8');
@@ -223,6 +228,9 @@ function approvePayment(resp, payment_id){
     });
     
     res.on('end', () => {
+      
+      //retData is PaymentDTO object
+      
       resp.status(res.statusCode)  
           .send(retData);
     });
@@ -263,6 +271,8 @@ function completePayment(resp, payment_id, txid){
     }
   }
     
+  console.log("request complete payment id: "+payment_id+", txid: "+txid);
+  
   let req = https.request(options, res => {
     
     res.setEncoding('utf8');
@@ -274,6 +284,9 @@ function completePayment(resp, payment_id, txid){
     });
     
     res.on('end', () => {
+      
+      //retData is PaymentDTO object
+      
       resp.status(res.statusCode)  
           .send(retData);
     });
