@@ -2,3 +2,6 @@
 .node-gyp
 node_modules
 .env
+shrinkwrap.yaml
+views
+.glitch-assets
